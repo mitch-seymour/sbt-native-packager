@@ -23,7 +23,7 @@ object ScriptPerMainClass extends AutoPlugin {
     }
   )
 
-  private def makeScript(startScript: String, qualifiedClassName: String): String =
+  private[this] def makeScript(startScript: String, qualifiedClassName: String): String =
     s"""|#!/bin/sh
 	|# Absolute path to this script
 	|SCRIPT=$$(readlink -f "$$0")
@@ -32,7 +32,7 @@ object ScriptPerMainClass extends AutoPlugin {
 			 |$$SCRIPTPATH/$startScript -main $qualifiedClassName "$$@"
 	|""".stripMargin
 
-  private def makeScriptName(qualifiedClassName: String): String = {
+  private[this] def makeScriptName(qualifiedClassName: String): String = {
     val clazz = qualifiedClassName.split("\\.").last
 
     val lowerCased = clazz.drop(1).flatMap {
