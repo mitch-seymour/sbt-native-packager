@@ -5,7 +5,7 @@ import sbt.Keys.{ discoveredMainClasses, mappings, target }
 import com.typesafe.sbt.packager.Keys.executableScriptName
 import com.typesafe.sbt.SbtNativePackager.Universal
 
-object ScriptPerMainclass extends AutoPlugin {
+object ScriptPerMainClass extends AutoPlugin {
 
   override def requires = JavaAppPackaging
 
@@ -16,19 +16,21 @@ object ScriptPerMainclass extends AutoPlugin {
       (discoveredMainClasses in Compile).value.map { qualifiedClassName =>
 	val clazz = makeScriptName(qualifiedClassName)
 	val file = tmp / clazz
-	val script = s"""|#!/bin/sh
-			 |# Absolute path to this script
-			 |SCRIPT=$$(readlink -f "$$0")
-			 |SCRIPTPATH=$$(dirname "$$SCRIPT")
-			 |
-			 |$$SCRIPTPATH/$startScript -main $qualifiedClassName "$$@"
-			 |""".stripMargin
-	IO.write(file, script)
+	IO.write(file, makeScript(startScript, qualifiedClassName))
 	file.setExecutable(true)
 	file -> s"bin/$clazz"
       }
     }
   )
+
+  private def makeScript(startScript: String, qualifiedClassName: String): String =
+    s"""|#!/bin/sh
+	|# Absolute path to this script
+	|SCRIPT=$$(readlink -f "$$0")
+	|SCRIPTPATH=$$(dirname "$$SCRIPT")
+	|
+			 |$$SCRIPTPATH/$startScript -main $qualifiedClassName "$$@"
+	|""".stripMargin
 
   private def makeScriptName(qualifiedClassName: String): String = {
     val clazz = qualifiedClassName.split("\\.").last

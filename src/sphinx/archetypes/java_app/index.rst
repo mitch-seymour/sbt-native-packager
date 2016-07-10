@@ -147,6 +147,25 @@ application arguments with ``--``. For example
     ./bin/my-app -Dconfig.resource=prod.conf -- -appParam1 -appParam2
 
 
+Multiple Applications
+=====================
+
+If you want to package an application with multiple main classes you can enable the ``ScriptPerMainClass`` plugin.
+It will generate the generic start script provided by ``JavaAppPackaging`` along with start scripts for each main
+class including the default main class.
+
+To enable this plugin, add this to your ``build.sbt``:
+
+.. code-block:: scala
+
+    enablePlugins(ScriptPerMainClass)
+
+    // important to set the default main class, otherwise the generic start script won't be generated
+    mainClass in Compile := Some("my.default.MainApp")
+
+
+Now you can package your application as usual, but with multiple start scripts.
+
 Customize
 =========
 
