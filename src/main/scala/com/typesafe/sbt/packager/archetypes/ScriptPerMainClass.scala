@@ -28,8 +28,7 @@ object ScriptPerMainClass extends AutoPlugin {
 	|# Absolute path to this script
 	|SCRIPT=$$(readlink -f "$$0")
 	|SCRIPTPATH=$$(dirname "$$SCRIPT")
-	|
-			 |$$SCRIPTPATH/$startScript -main $qualifiedClassName "$$@"
+	|$$SCRIPTPATH/$startScript -main $qualifiedClassName "$$@"
 	|""".stripMargin
 
   private[this] def makeScriptName(qualifiedClassName: String): String = {
