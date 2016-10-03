@@ -53,3 +53,4 @@ object Keys
     with archetypes.JavaAppKeys
     with archetypes.JavaServerAppKeys
     with archetypes.systemloader.SystemloaderKeys
+    with archetypes.scripts.BashStartScriptKeys

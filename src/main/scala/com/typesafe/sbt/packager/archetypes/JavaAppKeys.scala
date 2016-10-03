@@ -8,22 +8,6 @@ import sbt._
   */
 trait JavaAppKeys {
 
-  val makeBashScript =
-    TaskKey[Option[File]]("makeBashScript", "Creates or discovers the bash script used by this project.")
-  val bashScriptTemplateLocation =
-    TaskKey[File]("bashScriptTemplateLocation", "The location of the bash script template.")
-  val bashScriptDefines = TaskKey[Seq[String]](
-    "bashScriptDefines",
-    "A list of definitions that should be written to the bash file template."
-  )
-  val bashScriptExtraDefines = TaskKey[Seq[String]](
-    "bashScriptExtraDefines",
-    "A list of extra definitions that should be written to the bash file template."
-  )
-  val bashScriptConfigLocation = TaskKey[Option[String]](
-    "bashScriptConfigLocation",
-    "The location where the bash script will load default argument configuration from."
-  )
   // TODO - we should change this key name in future versions; it also specified
   // the location of the systemd EnvironmentFile
   val bashScriptEnvConfigLocation = SettingKey[Option[String]](
